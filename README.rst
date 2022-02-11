@@ -1,0 +1,6 @@
+- Проверить pyenv --version
+-- Если ошибка - установить pyenv по инструкции https://realpython.com/intro-to-pyenv/
+-- Повторно проверить pyenv --version
+- Установить pyenv install -v 3.9.6
+- Включаем pyenv local 3.9.6
+- Устанавливаем окружение pipenv install
