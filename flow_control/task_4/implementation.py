@@ -9,7 +9,7 @@ def get_next_date(some_date):
 
     Returns: следующая дата
     """
-    DAYS_IN_MONTH = {
+    days_in_month = {
         1: 31,
         2: 28,
         3: 31,
@@ -27,9 +27,9 @@ def get_next_date(some_date):
     day, month, year = some_date.day, some_date.month, some_date.year
 
     if year % 4 == 0:
-        DAYS_IN_MONTH[2] = 29
+        days_in_month[2] = 29
 
-    if day == DAYS_IN_MONTH[month]:
+    if day == days_in_month[month]:
         day = 1
         if month == 12:
             month = 1

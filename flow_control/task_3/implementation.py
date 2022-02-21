@@ -20,6 +20,8 @@ def get_days_count_by_month(month):
         'ноябрь': 30,
         'декабрь': 31,
     }
-    if month.lower() in months:
-        return months[month.lower()]
-    return 0
+    month_lower = month.lower()
+    days = 0
+    if month_lower in months:
+        days = months[month_lower]
+    return days
