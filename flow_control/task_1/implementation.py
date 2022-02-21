@@ -3,4 +3,4 @@ def get_numbers():
 
     Returns: итерируемый объект с нужными числами
     """
-    raise NotImplementedError
+    return [number for number in range(1000, 2000) if number % 7 == 0 and number % 5 != 0]
