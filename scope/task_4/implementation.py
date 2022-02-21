@@ -10,5 +10,8 @@ def open_and_close_file(file_path):
         file_path: путь до файла
     """
     open = bad_open
+    ###
+    # Добавьте свой код сюда
+    ###
     f = open(file_path, 'r')
     f.close()
