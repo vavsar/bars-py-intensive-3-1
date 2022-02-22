@@ -19,17 +19,12 @@ def cache_result(func):
     """
     Декоратор с кэшем результата
     """
-    cached_number = 0
-    cached_result = 0
+    cache = {}
 
     def wrapper(number):
-        nonlocal cached_number
-        nonlocal cached_result
-
-        used_func = cached_result
-        if number != cached_number:
+        used_func = cache[number]
+        if number not in cache:
             used_func = func(number)
-        cached_number = number
-        cached_result = used_func
+            cache[number] = used_func
         return used_func
     return wrapper
