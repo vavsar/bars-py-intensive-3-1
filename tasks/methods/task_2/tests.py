@@ -1,13 +1,7 @@
 import unittest
 
-from day_2.common import (
-    MyException,
-)
-from day_2.method_types.task_2.implementation import (
-    User1,
-    User2,
-    ClassFather,
-)
+from tasks.common import MyException
+from tasks.methods.task_2.implementation import ClassFather, User2, User1
 
 
 class MyTestCase(unittest.TestCase):
@@ -38,7 +32,6 @@ class MyTestCase(unittest.TestCase):
         father = ClassFather()
         self.assertRaises(MyException, father.register)
         self.assertRaises(MyException, father.get_name)
-
 
 
 if __name__ == '__main__':

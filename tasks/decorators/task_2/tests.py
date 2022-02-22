@@ -1,12 +1,7 @@
 import unittest
 
-from day_2.decorator.task_2.implementation import (
-    check_value,
-)
-from day_2.common import (
-    MyException,
-    factorial
-)
+from tasks.common import factorial, MyException
+from tasks.decorators.task_2.implementation import check_value
 
 
 class MyTestCase(unittest.TestCase):

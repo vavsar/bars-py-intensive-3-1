@@ -1,11 +1,7 @@
 import unittest
 
-from day_2.decorator.task_3.implementation import (
-    counter,
-)
-from day_2.common import (
-    some_func
-)
+from tasks.common import some_func
+from tasks.decorators.task_3.implementation import counter
 
 
 class MyTestCase(unittest.TestCase):

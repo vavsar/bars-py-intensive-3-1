@@ -1,12 +1,7 @@
 import unittest
 
-from day_2.decorator.task_4.implementation import (
-    decorator_maker,
-)
-from day_2.common import (
-    MyException,
-    specific_func
-)
+from tasks.common import specific_func, MyException
+from tasks.decorators.task_4.implementation import decorator_maker
 
 
 class MyTestCase(unittest.TestCase):
