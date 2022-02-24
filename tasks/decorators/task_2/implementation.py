@@ -8,7 +8,7 @@ def check_value(func):
     в противном случае - выбрасывает исключение MyException.
     """
     def wrapper(num_type):
-        if not isinstance(num_type, int) or num_type < 0:
+        if not type(int) or num_type < 0:
             raise MyException
         used_func = func(num_type)
         return used_func
@@ -17,12 +17,12 @@ def check_value(func):
 
 def cache_result(func):
     """
-    Декоратор с кэшем результата
+    Декоратор с кэшем результатов
     """
     cache = {}
 
     def wrapper(number):
-        used_func = cache[number]
+        used_func = cache.get(number)
         if number not in cache:
             used_func = func(number)
             cache[number] = used_func
