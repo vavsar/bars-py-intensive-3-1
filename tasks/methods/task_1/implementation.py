@@ -1,19 +1,17 @@
+COFFEE_SORTS = {
+    'Латте': ('Кофе', 'Молоко', 'Пенка'),
+    'Мокко': ('Кофе', 'Молоко', 'Шоколад'),
+    'Американо': ('Кофе', 'вода')
+}
+
+
 class Coffee:
-    def __init__(self):
-        self.coffee = "Coffee"
+    """
+    Класс инициализирует ингредиенты в зависимости от введенного типа кофе
+    """
 
-    def get_cappuchino(self):
-        return f'{self.coffee} cappuchino'
-
-    def get_latte(self):
-        return f'{self.coffee} latee'
-
-    def get_glasse(self):
-        return f'{self.coffee} glasse'
-
-
-if __name__ == '__main__':
-    c1 = Coffee()
-    print(c1.get_cappuchino())
-    print(c1.get_latte())
-    print(c1.get_glasse())
+    def __init__(self, coffee):
+        if coffee in COFFEE_SORTS:
+            self.ingredients = COFFEE_SORTS.get(coffee)
+        else:
+            raise AttributeError('Выберите "Латте", "Мокко" или "Американо"')
