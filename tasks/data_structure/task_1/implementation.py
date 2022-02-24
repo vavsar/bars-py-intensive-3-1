@@ -4,6 +4,12 @@ class Tuple:
     При создании принимается последовательность объектов.
     """
 
+    def __init__(self, *args) -> None:
+        self.array = args
+
+    def __getitem__(self, key):
+        return self.array[key]
+
     def count(self, value) -> int:
         """
         Возвращает количество появлений value в объекте.
@@ -11,7 +17,11 @@ class Tuple:
         Args:
             value: количество вхождений в объекте
         """
-        raise NotImplementedError
+        count = 0
+        for number in self.array:
+            if value == number:
+                count += 1
+        return count
 
     def index(self, value) -> int:
         """
@@ -20,4 +30,8 @@ class Tuple:
         Args:
             value: индекс искомого элемента
         """
-        raise NotImplementedError
+        if value not in self.array:
+            raise ValueError
+        for index, number in enumerate(self.array):
+            if number == value:
+                return index
