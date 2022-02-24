@@ -4,7 +4,7 @@ class Tuple:
     При создании принимается последовательность объектов.
     """
 
-    def __init__(self, *args) -> None:
+    def __init__(self, *args):
         self.array = args
 
     def __getitem__(self, key):
@@ -21,6 +21,7 @@ class Tuple:
         for number in self.array:
             if value == number:
                 count += 1
+
         return count
 
     def index(self, value) -> int:
@@ -32,6 +33,7 @@ class Tuple:
         """
         if value not in self.array:
             raise ValueError
+
         for index, number in enumerate(self.array):
             if number == value:
                 return index
