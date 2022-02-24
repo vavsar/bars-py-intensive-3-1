@@ -15,7 +15,7 @@ def decorator_maker(times, delay):
     """
 
     def inner(func):
-        def wrapper():
+        def wrapper(*args, **kwargs):
             time = times
             while time > 0:
                 try:
