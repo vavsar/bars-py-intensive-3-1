@@ -9,30 +9,31 @@ class MathClock:
 
     При инстанцировании часы установлены в значение 00:00.
     """
+
     def __init__(self, minutes=0):
-        self.minutes = minutes
+        self._minutes = minutes
 
     def __add__(self, other):
-        self.minutes += other
-        return self.minutes
+        self._minutes += other
+        return self._minutes
 
     def __sub__(self, other):
-        self.minutes -= other
-        return self.minutes
+        self._minutes -= other
+        return self._minutes
 
     def __mul__(self, other):
-        self.minutes = self.minutes + other * 60
-        return self.minutes
+        self._minutes = self._minutes + other * 60
+        return self._minutes
 
     def __truediv__(self, other):
-        self.minutes = self.minutes - other * 60
-        return self.minutes
+        self._minutes = self._minutes - other * 60
+        return self._minutes
 
     def get_time(self):
-        m = self.minutes % 60
-        h = (self.minutes // 60) % 24
+        m = self._minutes % 60
+        h = (self._minutes // 60) % 24
         return f'{self.__get_formatted(h)}:{self.__get_formatted(m)}'
 
     @classmethod
-    def __get_formatted(cls, x):
-        return str(x).rjust(2, "0")
+    def __get_formatted(cls, time_unit):
+        return str(time_unit).rjust(2, "0")

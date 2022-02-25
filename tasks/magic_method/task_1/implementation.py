@@ -3,6 +3,7 @@ class Multiplier:
     Класс реализуает базовые арифметические операции с числами
     и аналогичными классами
     """
+
     def __init__(self, value):
         self._value = value
 
