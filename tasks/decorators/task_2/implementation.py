@@ -22,8 +22,9 @@ def cache_result(func):
     cache = {}
 
     def wrapper(number):
-        used_func = cache.get(number)
-        if number not in cache:
+        if number in cache:
+            used_func = cache.get(number)
+        else:
             used_func = func(number)
             cache[number] = used_func
         return used_func
