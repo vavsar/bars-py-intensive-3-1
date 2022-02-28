@@ -1,4 +1,7 @@
 def fib(n):
+    """
+    creates generator for fibonacci numbers
+    """
     if n < 3:
         yield 1
 
