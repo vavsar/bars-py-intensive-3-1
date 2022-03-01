@@ -8,21 +8,24 @@ class WorkerManager(models.Manager):
     """
     def get_queryset(self):
         """
-        Переопределенный кверисет с фильтрацией сотрудников с заданной датой принятия на работу и с не пустым табельным номером отличным от 0
+        Переопределенный кверисет с фильтрацией сотрудников с заданной датой
+        принятия на работу и с не пустым табельным номером отличным от 0
         """
+        queryset = super().get_queryset().filter(startwork_date__isnull=False, tab_num__gt=0)
 
-        raise NotImplementedError
+        return queryset
 
 
     def get_workers_info(self):
         """
-            Получение  списка строк в которых содержится
+        Получение  списка строк в которых содержится
         фамилия, имя, табельный номер сотрудника а также название подразделения в котором числится
         Строки упорядочены по фамилии и имени сотрудника.
         Каждая строка должна быть в формате вида: Васильев Василий, 888, Подразделение №1
         """
+        queryset = self.values_list('last_name', 'first_name', 'tab_num', 'department__name')
 
-        raise NotImplementedError
+        return queryset
 
 
 class Department(models.Model):
@@ -33,14 +36,17 @@ class Department(models.Model):
         """
         Количество активных сотрудников подразделения
         """
-        raise NotImplementedError
+        return self.workers.count()
 
     @property
     def get_all_worker_count(self):
         """
         Количество всех сотрудников подразделения
         """
-        raise NotImplementedError
+        return Worker.objects_all.select_related('department').all().count()
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = 'department'
@@ -58,8 +64,11 @@ class Worker(models.Model):
     last_name = models.CharField('Имя', max_length=30)
     startwork_date = models.DateField('Дата выхода на работу', null=True, )
     tab_num = models.IntegerField('Табельный номер', default=0)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='workers')
 
     class Meta:
         db_table = 'workers'
         verbose_name = 'Сотрудник'
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
