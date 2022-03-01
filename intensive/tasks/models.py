@@ -15,7 +15,6 @@ class WorkerManager(models.Manager):
 
         return queryset
 
-
     def get_workers_info(self):
         """
         Получение  списка строк в которых содержится
@@ -23,9 +22,10 @@ class WorkerManager(models.Manager):
         Строки упорядочены по фамилии и имени сотрудника.
         Каждая строка должна быть в формате вида: Васильев Василий, 888, Подразделение №1
         """
-        queryset = self.values_list('last_name', 'first_name', 'tab_num', 'department__name')
+        workers = self.values_list('last_name', 'first_name', 'tab_num', 'department__name')
 
-        return queryset
+        return [f'{last_name} {first_name}, {tab_num}, {departament_name}'
+                for last_name, first_name, tab_num, departament_name in workers]
 
 
 class Department(models.Model):
@@ -43,7 +43,7 @@ class Department(models.Model):
         """
         Количество всех сотрудников подразделения
         """
-        return Worker.objects_all.select_related('department').all().count()
+        return Worker.objects_all.all().count()
 
     def __str__(self):
         return self.name
