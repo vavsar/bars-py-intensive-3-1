@@ -22,7 +22,9 @@ class WorkerManager(models.Manager):
         Строки упорядочены по фамилии и имени сотрудника.
         Каждая строка должна быть в формате вида: Васильев Василий, 888, Подразделение №1
         """
-        workers = self.values_list('last_name', 'first_name', 'tab_num', 'department__name')
+        workers = self.values_list('last_name', 'first_name', 'tab_num', 'department__name').ordered_by(
+            'last_name', 'first_name'
+        )
 
         return [f'{last_name} {first_name}, {tab_num}, {departament_name}'
                 for last_name, first_name, tab_num, departament_name in workers]
