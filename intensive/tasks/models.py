@@ -43,7 +43,7 @@ class Department(models.Model):
         """
         Количество всех сотрудников подразделения
         """
-        return Worker.objects_all.all().count()
+        return Worker.objects_all.filter(department=self).count()
 
     def __str__(self):
         return self.name
