@@ -20,7 +20,7 @@ class ProductCount(models.Model):
     """
     Количество товара
     """
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='Товар')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='Товар', related_name='product_counts')
     begin = models.DateField('Начало периода')
     end = models.DateField('Окончание периода')
     value = models.PositiveIntegerField('Значение')
@@ -33,7 +33,7 @@ class ProductCost(models.Model):
     """
     Стоимость товара
     """
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='Товар')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='Товар', related_name='product_costs')
     begin = models.DateField('Начало периода')
     end = models.DateField('Окончание периода')
     value = models.DecimalField('Значение', max_digits=6, decimal_places=2)
