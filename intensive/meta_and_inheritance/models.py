@@ -80,7 +80,12 @@ class Worker(Person):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def get_status(self):
-        return f'{self.first_name} работает с {self.startwork_date}'
+        if self.startwork_date is None:
+            result = f'Дата начала работы для {self.first_name} не установлена'
+        else:
+            result = f'{self.first_name} работает с {self.startwork_date}'
+
+        return result
 
     class Meta:
         db_table = 'workers'
@@ -96,11 +101,15 @@ class OrderedWorker(Worker):
         """
         Получить значение года приема на работу
         """
-        return self.startwork_date.year
+        try:
+            year = self.startwork_date.year
+        except Exception:
+            raise ValueError('Дата выхода на работу не задана')
+
+        return year
 
     class Meta:
         proxy = True
-        Index(fields=['first_name', 'startwork_date'])
         ordering = ['first_name', 'startwork_date']
 
 
