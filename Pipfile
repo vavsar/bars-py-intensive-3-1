@@ -6,8 +6,11 @@ name = "pypi"
 [packages]
 Django = "==3.2.12"
 psycopg2-binary = "==2.9.3"
+djangorestframework = "==3.13.1"
+django-debug-toolbar = "==3.2.4"
 
 [dev-packages]
+isort = "==5.10.1"
 
 [requires]
 python_version = "3.9"

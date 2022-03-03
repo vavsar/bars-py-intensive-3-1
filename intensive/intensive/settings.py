@@ -9,11 +9,18 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
+import sys
+from pathlib import (
+    Path,
+)
 
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+sys.path.insert(0, os.path.join(BASE_DIR, 'intensive', 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'intensive', 'apps', 'services'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'debug_toolbar',
+
+    'users',
+    'products',
+    'recipes',
+    'common',
+    'recommendations',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'intensive.urls'
@@ -103,6 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -127,3 +144,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
