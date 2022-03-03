@@ -101,10 +101,10 @@ class OrderedWorker(Worker):
         """
         Получить значение года приема на работу
         """
-        try:
+        if self.startwork_date is not None:
             year = self.startwork_date.year
-        except Exception:
-            raise ValueError('Дата выхода на работу не задана')
+        else:
+            year = 'Дата выхода на работу не задана'
 
         return year
 
