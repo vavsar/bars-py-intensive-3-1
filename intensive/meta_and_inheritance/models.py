@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Index
 
 
 class WorkerManager(models.Manager):
@@ -99,6 +100,7 @@ class OrderedWorker(Worker):
 
     class Meta:
         proxy = True
+        Index(fields=['headline', '-pub_date'])
         ordering = ['first_name', 'startwork_date']
 
 
