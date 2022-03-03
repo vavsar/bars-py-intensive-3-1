@@ -76,14 +76,12 @@ class WorkerModelTest(TestCase):
 
         Worker.objects_all.bulk_create(workers)
 
-
         Director.objects.create(
             first_name='Тарасов',
             last_name='Тарас',
             startwork_date=date(1999, 1, 1),
             tab_num=1,
             department=department)
-
 
     def test_all_count_workers(self):
         all_count = Worker.objects_all.all().count()
