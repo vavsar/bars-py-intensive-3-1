@@ -100,7 +100,7 @@ class OrderedWorker(Worker):
 
     class Meta:
         proxy = True
-        Index(fields=['headline', '-pub_date'])
+        Index(fields=['first_name', 'startwork_date'])
         ordering = ['first_name', 'startwork_date']
 
 
