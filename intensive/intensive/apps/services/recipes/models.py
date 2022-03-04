@@ -25,6 +25,9 @@ class Recipe(ProjectModel):
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
 
+    def __str__(self):
+        return self.title
+
 
 class CookStep(ProjectModel):
     """
@@ -43,6 +46,9 @@ class CookStep(ProjectModel):
         db_table = 'recipes_cook_step'
         verbose_name = 'Шаг приготовления блюда'
         verbose_name_plural = 'Шаги приготовления блюд'
+
+    def __str__(self):
+        return self.title
 
 
 class RecipeProduct(ProjectModel):
