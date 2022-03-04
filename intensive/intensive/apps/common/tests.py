@@ -37,7 +37,11 @@ class CommonTest(TestCase):
         """
         response = self.client.get('/task-1/')
 
-        trust_result = json.loads('{"recipes": [["user4@pee.rocks", "Рецепт 1", "Описание рецепта 1"], ["user4@pee.rocks", "Рецепт 2", "Описание рецепта 2"], ["user4@pee.rocks", "Рецепт 3", "Описание рецепта 3"], ["user5@pee.rocks", "Рецепт 4", "Описание рецепта 4"], ["user5@pee.rocks", "Рецепт 5", "Описание рецепта 5"]]}')
+        trust_result = json.loads(
+            '{"recipes": [["user4@pee.rocks", "Рецепт 1", "Описание рецепта 1"], ["user4@pee.rocks", "Рецепт 2", '
+            '"Описание рецепта 2"], ["user4@pee.rocks", "Рецепт 3", "Описание рецепта 3"], ["user5@pee.rocks", '
+            '"Рецепт 4", "Описание рецепта 4"], ["user5@pee.rocks", "Рецепт 5", "Описание рецепта 5"]]}'
+        )
 
         response_result = json.loads(response.content)
 
