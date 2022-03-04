@@ -105,7 +105,9 @@ class Task3View(View):
                 'userrecipe__user__author__email',
                 'title',
                 'description'
-            ).annotate(likes_count=Count(F('vote__is_like'))).order_by('-likes_count')
+            ).annotate(
+                likes_count=Count('vote')
+            ).order_by('-likes_count')
         )
 
         # Если есть необходимость посмотреть на выполняемые запросы, план запросов через браузер, то нужно
@@ -154,7 +156,7 @@ class Task4View(View):
                 'email',
                 Value('Пользователь')
             ).annotate(
-                recipe_count=Count('vote__recipe'),
+                recipe_count=Count('vote'),
             ).order_by('-recipe_count')
         )[:3]
 
