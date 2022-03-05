@@ -69,6 +69,9 @@ class CheckErrorMiddleware(MiddlewareMixin):
 
 
 class PrintQueriesMiddleware:
+    """
+    Выводит список запросов при загрузке страницы /task-5/
+    """
     def __init__(self, get_response):
         self.get_response = get_response
 

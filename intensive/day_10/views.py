@@ -41,6 +41,10 @@ def calc(request):
 
 
 def check_requests(request):
+    """
+    Производит рандомные операции для отображения через
+    миддлвар при загрузке страницы /task-5/
+    """
     workers = Worker.objects.select_related('department').all()
     first_workers = workers.filter(tab_num__startswith=1)
     unlucky_ones = workers.filter(last_name='bedov')
