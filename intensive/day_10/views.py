@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_http_methods
 
+from day_10.models import Worker, Department
 
 OPERATORS = {
     '+': (lambda operand_1, operand_2: operand_1 + operand_2),
@@ -9,6 +11,7 @@ OPERATORS = {
 }
 
 
+@require_http_methods(["GET"])
 def calc(request):
     """
     Представление которому в параметре запроса maths через разделитель перечисляются простейшие арифметические операции
@@ -19,15 +22,28 @@ def calc(request):
 
     Результат:  JsonResponse вида {'3*3': 9, '10-2': 8, '10/5': 2}
     """
-    delimiter = request.GET.get('delimiter')
+    if 'delimiter' in request.GET:
+        delimiter = request.GET.get('delimiter')
+    else:
+        delimiter = ','
+
     maths = request.GET.get('maths').split(delimiter)
-    result = []
+    result = {}
 
     for calculation in maths:
         for operand in calculation:
             if operand in OPERATORS:
                 number1, number2 = calculation.split(operand)
                 operation = OPERATORS[operand](int(number1), int(number2))
-                result.append(f'<p>{calculation} = {operation}</p>')
+                result[calculation] = operation
 
-    return HttpResponse(result)
+    return JsonResponse(result)
+
+
+def check_requests(request):
+    workers = Worker.objects.select_related('department').all()
+    first_workers = workers.filter(tab_num__startswith=1)
+    unlucky_ones = workers.filter(last_name='bedov')
+    unlucky_ones.delete()
+
+    return HttpResponse(first_workers)

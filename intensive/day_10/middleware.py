@@ -1,11 +1,16 @@
+import ast
+import datetime
 import json
 
+from django.db import connection
 from django.http import HttpResponse
 from django.http import JsonResponse
 
 from django.utils.deprecation import (
     MiddlewareMixin,
 )
+
+from timeit import default_timer as timer
 
 import sys
 
@@ -15,7 +20,21 @@ class StatisticMiddleware:
     Компонент вычисляющий время выполнения запроса на сервере и размер ответа в байтах.
     Отображает значения в консоли приложения
     """
-    pass
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # One-time configuration and initialization.
+
+    def __call__(self, request):
+        time_before = timer()
+
+        response = self.get_response(request)
+
+        execution_time = timer() - time_before
+        print('Время выполнения запроса: ', execution_time)
+        print('Размер ответа в байтах: ', sys.getsizeof(response))
+
+        return response
 
 
 class FormatterMiddleware:
@@ -23,7 +42,20 @@ class FormatterMiddleware:
     Компонент форматирующий Json ответ в HttpResponse
     {'key': value} => <p>key = value</p>
     """
-    pass
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+
+        if type(response) == JsonResponse:
+            content = json.loads(response.content)
+            output = []
+            for key, value in content.items():
+                output.append(f'<p>{key} = {value}</p>')
+            response = HttpResponse(output)
+
+        return response
 
 
 class CheckErrorMiddleware(MiddlewareMixin):
@@ -31,7 +63,17 @@ class CheckErrorMiddleware(MiddlewareMixin):
         Перехватывает необработанное исключение в представлении и отображает ошибку в виде
         "Ошибка: {exception}"
     """
-    pass
+    @staticmethod
+    def process_exception(request, exception):
+        return HttpResponse(f'Ошибка: {exception}')
 
 
+class PrintQueriesMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
 
+    def __call__(self, request):
+        response = self.get_response(request)
+        print(connection.queries)
+
+        return response
