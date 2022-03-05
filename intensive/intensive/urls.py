@@ -20,5 +20,4 @@ from day_10 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('calc/', views.calc, name='calc'),
-    path('task-5/', views.check_requests, name='check_requests')
 ]

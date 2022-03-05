@@ -1,7 +1,7 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 
-from day_10.models import Worker, Department
+# from day_10.models import Worker, Department
 
 OPERATORS = {
     '+': (lambda operand_1, operand_2: operand_1 + operand_2),
@@ -22,11 +22,7 @@ def calc(request):
 
     Результат:  JsonResponse вида {'3*3': 9, '10-2': 8, '10/5': 2}
     """
-    if 'delimiter' in request.GET:
-        delimiter = request.GET.get('delimiter')
-    else:
-        delimiter = ','
-
+    delimiter = request.GET.get('delimiter', ",")
     maths = request.GET.get('maths').split(delimiter)
     result = {}
 
@@ -38,16 +34,3 @@ def calc(request):
                 result[calculation] = operation
 
     return JsonResponse(result)
-
-
-def check_requests(request):
-    """
-    Производит рандомные операции для отображения через
-    миддлвар при загрузке страницы /task-5/
-    """
-    workers = Worker.objects.select_related('department').all()
-    first_workers = workers.filter(tab_num__startswith=1)
-    unlucky_ones = workers.filter(last_name='bedov')
-    unlucky_ones.delete()
-
-    return HttpResponse(first_workers)

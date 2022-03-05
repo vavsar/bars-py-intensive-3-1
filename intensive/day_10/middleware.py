@@ -1,8 +1,5 @@
-import ast
-import datetime
 import json
 
-from django.db import connection
 from django.http import HttpResponse
 from django.http import JsonResponse
 
@@ -23,7 +20,6 @@ class StatisticMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
-        # One-time configuration and initialization.
 
     def __call__(self, request):
         time_before = timer()
@@ -48,7 +44,7 @@ class FormatterMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
-        if type(response) == JsonResponse:
+        if isinstance(response, JsonResponse):
             content = json.loads(response.content)
             output = []
             for key, value in content.items():
@@ -66,17 +62,3 @@ class CheckErrorMiddleware(MiddlewareMixin):
     @staticmethod
     def process_exception(request, exception):
         return HttpResponse(f'Ошибка: {exception}')
-
-
-class PrintQueriesMiddleware:
-    """
-    Выводит список запросов при загрузке страницы /task-5/
-    """
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        print(connection.queries)
-
-        return response

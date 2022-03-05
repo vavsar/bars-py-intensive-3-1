@@ -1,6 +1,4 @@
-from django.test import RequestFactory, TestCase
-
-from .middleware import FormatterMiddleware
+from django.test import TestCase
 
 
 class MiddlewareTestCase(TestCase):
