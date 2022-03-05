@@ -1,4 +1,13 @@
-from django.http import JsonResponse
+from django.http import HttpResponse
+
+
+OPERATORS = {
+    '+': (lambda operand_1, operand_2: operand_1 + operand_2),
+    '-': (lambda operand_1, operand_2: operand_1 - operand_2),
+    '*': (lambda operand_1, operand_2: operand_1 * operand_2),
+    '/': (lambda operand_1, operand_2: operand_1 / operand_2),
+}
+
 
 def calc(request):
     """
@@ -10,4 +19,15 @@ def calc(request):
 
     Результат:  JsonResponse вида {'3*3': 9, '10-2': 8, '10/5': 2}
     """
-    pass
+    delimiter = request.GET.get('delimiter')
+    maths = request.GET.get('maths').split(delimiter)
+    result = []
+
+    for calculation in maths:
+        for operand in calculation:
+            if operand in OPERATORS:
+                number1, number2 = calculation.split(operand)
+                operation = OPERATORS[operand](int(number1), int(number2))
+                result.append(f'<p>{calculation} = {operation}</p>')
+
+    return HttpResponse(result)
