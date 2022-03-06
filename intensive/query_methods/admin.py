@@ -34,7 +34,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'name',
-        'get_orders_count'
+        'orders_count'
     )
 
 

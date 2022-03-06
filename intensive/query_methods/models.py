@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import (
     models,
 )
@@ -49,15 +51,11 @@ class Customer(models.Model):
     name = models.CharField('Покупатель', max_length=300)
 
     @property
-    def get_orders_count(self):
-        if not self:
-            return 0
-        return self.orders.count()
+    def orders_count(self):
+        return self.get_orders_in_period(datetime.min, datetime.max)
 
-    def get_orders_in_time_count(self, begin, end):
-        if not self:
-            return 0
-        return self.orders.filter(date_formation__gte=begin, date_formation__lte=end).count()
+    def get_orders_in_period(self, begin, end):
+        return self.orders.filter(date_formation__range=(begin, end)).count()
 
     class Meta:
         db_table = 'customer'
