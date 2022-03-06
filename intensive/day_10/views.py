@@ -22,10 +22,7 @@ def calc(request):
 
     Результат:  JsonResponse вида {'3*3': 9, '10-2': 8, '10/5': 2}
     """
-    if 'delimiter' in request.GET:
-        delimiter = request.GET.get('delimiter')
-    else:
-        delimiter = ','
+    delimiter = request.GET.get('delimiter', ",")
 
     maths = request.GET.get('maths').split(delimiter)
     result = {}

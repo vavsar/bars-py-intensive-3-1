@@ -48,7 +48,7 @@ class FormatterMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
-        if type(response) == JsonResponse:
+        if isinstance(response, JsonResponse):
             content = json.loads(response.content)
             output = []
             for key, value in content.items():
@@ -77,6 +77,7 @@ class PrintQueriesMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
+        print(request.path_info)
         print(connection.queries)
 
         return response
