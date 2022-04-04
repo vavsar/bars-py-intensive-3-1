@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>M3-UI DEMO</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <style type='text/css'>
+        html, body {
+            font-family: Tahoma, Sans;
+            font-size: 13px;
+        }
+
+        #loading-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 1001;
+        }
+
+        #loading {
+            position: absolute;
+            top: 40%;
+            left: 45%;
+            z-index: 1002;
+        }
+    </style>
+</head>
+<body>
+
+{% load static %}
+
+<link rel='stylesheet' type='text/css' href='{% static "vendor/extjs/resources/css/ext-all.css" %}'/>
+<link rel='stylesheet' type='text/css' href='{% static "vendor/extjs/resources/css/ux/ColumnHeaderGroup.css" %}'/>
+<link rel='stylesheet' type='text/css' href='{% static "vendor/extjs/resources/css/ux/ux-all.css" %}'/>
+
+<!--Подключаем m3 css: -->
+<link rel='stylesheet' type='text/css' href='{% static "m3/css/m3.css" %}'/>
+
+<script type="text/javascript" src='{% static "vendor/extjs/adapter/ext/ext-base-debug.js" %}'></script>
+<script type='text/javascript' src='{% static "vendor/extjs/ext-all-debug.js" %}'></script>
+<script type='text/javascript' src='{% static "vendor/extjs/ux-all-debug.js" %}'></script>
+<script type='text/javascript' src='{% static "vendor/extjs/locale/ext-lang-ru.js" %}'></script>
+
+<!--Подключаем m3 js: -->
+<script type='text/javascript' src='{% static "m3/js/m3-debug.js" %}'></script>
+
+<style>
+</style>
+
+
+<script type='text/javascript'>
+    Ext.onReady(function () {
+        Ext.QuickTips.init();
+
+        {% autoescape off  %}
+        const pnl = {{ panel }};
+        pnl.render(document.body);
+        {% endautoescape %}
+    });
+</script>
+
+</body>
+</html>
