@@ -5,7 +5,7 @@ from m3.actions import ActionPack, Action, ACD
 from m3_ext.ui.results import ExtUIScriptResult
 from recordpack.recordpack import BaseRecordPack
 from day_12.providers import TestTaskProvider
-from day_12.ui import MasterPanel, MasterWindow, GridWindow, ItemWindow
+from day_12.ui import MasterPanel, MasterWindow, GridWindow, EditItemWindow, CreateItemWindow
 
 User = get_user_model()
 
@@ -92,8 +92,8 @@ class MasterRecordPack(BaseRecordPack):
     provider = TestTaskProvider(
         data_source=User,
     )
-    edit_window = ItemWindow
-    new_window = ItemWindow
+    edit_window = EditItemWindow
+    new_window = CreateItemWindow
 
     quick_filters = {
         'first_name': {'control': {'xtype': 'textfield'}},

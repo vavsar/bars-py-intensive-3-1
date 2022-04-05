@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+
+from django.contrib.auth.hashers import make_password
 from recordpack.provider import DjangoModelProvider
 
 
@@ -16,13 +18,12 @@ class GridItem:
         super().__init__()
 
 
-# Тестовый набор данных, чтобы не использовать БД
-test_data = [GridItem(i) for i in range(1, 10)]
-
-
 class TestTaskProvider(DjangoModelProvider):
     """
     Тестовый провайдер для задания
     """
     def save(self, obj):
+        if getattr(obj, 'password'):
+            password = make_password(getattr(obj, 'password'))
+            setattr(obj, 'password', password)
         super().save(obj)
