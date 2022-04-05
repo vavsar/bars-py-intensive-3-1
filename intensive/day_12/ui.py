@@ -63,12 +63,18 @@ class GridWindow(ExtWindow):
         )
         self.grid.plugins.append('new Ext.ux.grid.GridHeaderFilters()')
         self.grid.add_column(
-            data_index='id',
-            header='ИД',
+            data_index='first_name',
+            header='Имя',
+            sortable=True
         )
         self.grid.add_column(
-            data_index='name',
-            header='Имя',
+            data_index='last_name',
+            header='Фамилия',
+            sortable=True
+        )
+        self.grid.add_column(
+            data_index='email',
+            header='email',
             sortable=True
         )
         self.items.extend([
@@ -82,13 +88,25 @@ class ItemWindow(ExtEditWindow):
     """
     def __init__(self, *args, create_new=False, **kwargs):
         super().__init__(*args, **kwargs)
-        self.title = 'Карточка элемента'
+        self.title = 'Редактировать пользователя'
         self.id_field = ExtHiddenField(
             name='id',
         )
-        self.name_field = ExtStringField(
-            label='Наименование',
-            name='name',
+        self.first_name_field = ExtStringField(
+            label='Имя',
+            name='first_name',
+        )
+        self.last_name_field = ExtStringField(
+            label='Фамилия',
+            name='last_name',
+        )
+        self.email_field = ExtStringField(
+            label='Email',
+            name='email',
+        )
+        self.password_field = ExtStringField(
+            label='Пароль',
+            name='password',
         )
         self.form = ExtForm()
         self.button_align = self.align_left
@@ -107,7 +125,10 @@ class ItemWindow(ExtEditWindow):
 
         self.form.items.extend([
             self.id_field,
-            self.name_field,
+            self.first_name_field,
+            self.last_name_field,
+            self.email_field,
+            self.password_field,
         ])
 
         self.init_component(*args, **kwargs)
