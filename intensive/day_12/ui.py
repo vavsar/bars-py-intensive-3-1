@@ -1,6 +1,6 @@
 from m3_ext.ui.containers import ExtFieldSet, ExtForm, ExtToolBar
 from m3_ext.ui.controls import ExtButton
-from m3_ext.ui.fields import ExtStringField, ExtHiddenField
+from m3_ext.ui.fields import ExtStringField, ExtHiddenField, ExtCheckBox
 from m3_ext.ui.panels import ExtObjectGrid
 from m3_ext.ui.windows import ExtWindow, ExtEditWindow
 
@@ -89,11 +89,11 @@ class GridWindow(ExtWindow):
 
 class CreateItemWindow(ExtEditWindow):
     """
-    Пример окна редактирования
+    Окно создания пользователя
     """
     def __init__(self, *args, create_new=True, **kwargs):
         super().__init__(*args, **kwargs)
-        self.title = 'Редактировать пользователя'
+        self.title = 'Создать пользователя'
         self.id_field = ExtHiddenField(
             name='id',
         )
@@ -117,6 +117,10 @@ class CreateItemWindow(ExtEditWindow):
             label='Пароль',
             name='password',
         )
+        self.isStaff_field = ExtCheckBox(
+            label='Staff',
+            name='is_staff',
+        )
         self.form = ExtForm()
         self.button_align = self.align_left
         self.save_button = ExtButton(
@@ -139,6 +143,7 @@ class CreateItemWindow(ExtEditWindow):
             self.last_name_field,
             self.email_field,
             self.password_field,
+            self.isStaff_field,
         ])
 
         self.init_component(*args, **kwargs)
@@ -146,7 +151,7 @@ class CreateItemWindow(ExtEditWindow):
 
 class EditItemWindow(ExtEditWindow):
     """
-    Пример окна редактирования
+    Окно редактирования пользователя
     """
     def __init__(self, *args, create_new=False, **kwargs):
         super().__init__(*args, **kwargs)
@@ -174,6 +179,10 @@ class EditItemWindow(ExtEditWindow):
             label='Пароль',
             name='password',
         )
+        self.isStaff_field = ExtCheckBox(
+            label='Staff',
+            name='is_staff',
+        )
         self.form = ExtForm()
         self.button_align = self.align_left
         self.save_button = ExtButton(
@@ -196,6 +205,7 @@ class EditItemWindow(ExtEditWindow):
             self.last_name_field,
             self.email_field,
             self.password_field,
+            self.isStaff_field,
         ])
 
         self.init_component(*args, **kwargs)
