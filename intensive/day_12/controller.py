@@ -1,5 +1,4 @@
 from m3.actions import ActionController
-from day_12.actions import MasterPack
 
 
 class MainController(ActionController):
@@ -14,6 +13,5 @@ class MainController(ActionController):
         return super().process_request(request)
 
 
-# Создадим экземпляр контроллера и зарегистрируем в нем пак
+# Создадим экземпляр контроллера
 main_controller = MainController('/demo')
-main_controller.append_pack(MasterPack())
