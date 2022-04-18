@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'day_19',
 ]
 
 MIDDLEWARE = [
@@ -74,14 +75,28 @@ WSGI_APPLICATION = 'intensive.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {},
+    'main': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'intensive',
-        'USER': 'intensive',
-        'PASSWORD': 'intensive',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Passw0rd',
         'HOST': '127.0.0.1',
-        'PORT': '7432',
-    }
+        'PORT': '5432',
+    },
+    'replica': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Passw0rd',
+        'HOST': '127.0.0.1',
+        'PORT': '5555',
+        'TEST': {
+            'MIRROR': 'default',
+        },
+    },
+
+
 }
 
 

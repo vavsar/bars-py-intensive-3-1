@@ -1,0 +1,34 @@
+=|===|=
+console_1
+=|===|=
+1. sudo apt install postgresql postgresql-contrib (Установка Postgresql)
+2. sudo -i -u postgres (Переход в учетную запись postgres)
+3. postgres@ubuntu:~$ psql (Переход в командную строку postgres)
+4. postgres=# CREATE TABLE worker(id SERIAL PRIMARY KEY, fio VARCHAR(127)); (Создание таблицы worker)
+5. postgres=# SELECT pg_create_physical_replication_slot('replica'); (Создание слота репликации)
+6. postgres=# SELECT name, setting FROM pg_settings WHERE name IN('wal_level'); (Проверка режима по умолчанию журнала WAL)
+7. SHOW config_file; (получаем путь файла конфигурации основного сервера)
+>>>/etc/postgresql/12/main/postgresql.conf
+
+=|===|=
+console_2
+=|===|=
+8. pg_basebackup -U postgres --pgdata=/etc/postgresql/12/repl -R --slot=replica (Создание сервера репликации 'repl' рядом с основным сервером 'main')
+9. Выставляем порт (port=5555) в созданном файле конфигурации repl/postgresql.auto.conf и переименовываем его в postgresql.conf
+10. Копируем файл /main/pg_hba.conf в /repl/pg_hba.conf, меняем владельца на postgre и выдаем права "Чтение и запись"
+11. /usr/lib/postgresql/12/bin/pg_ctl -D '/etc/postgresql/12/repl' start (Запуск сервера реплики)
+12. pg_lsclusters (Просмотр запущенных серверов)
+
+=|===|=
+console_1
+=|===|=
+13.SELECT * FROM pg_stat_replication; (Убеждаемся в том, что main видит реплику по присутствию номеров записей в журнале WAL)
+14. select * from pg_replication_slots;  (На основном сервере слот с репликой инициализировался)
+
+=|===|=
+console_3
+=|===|=
+15. psql -h 127.0.0.1 -p 5555 (Подключаемся к реплике (с вводом пароля к пользователю postgres))
+16. SELECT * FROM worker; (Таблица создалась)
+17. INSERT INTO worker (fio) VALUES('Петров Петр Петрович');(Проверяем возможность изменения записей. Видим ошибку, так как реплика read-only (то, что и требовалось))
+
