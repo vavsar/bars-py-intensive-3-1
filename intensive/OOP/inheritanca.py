@@ -1,38 +1,55 @@
-class Animal:
-    head = 1
-    tail = 1
-    paws = 4
+class Carcass:
+    __some_car_details = True
 
 
-class Cat(Animal):
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+class WheelsBase:
+    __blocked = True
 
-    def info(self):
-        print(f"I am a cat. My name is {self.name}. I am {self.age} years old.")
+    def unblock_wheels(self):
+        print('wheels unblocked')
+        self.__blocked = False
+
+
+class Motor:
+
+    __motor = False
+
+    def turn_on_motor(self):
+        print('Motor turned on')
+        self.__motor = True
+
+
+class Car(Carcass, WheelsBase, Motor):
+
+    def drive(self):
+        self.turn_on_motor()
+        self.unblock_wheels()
+        print('the vehicle starts moving\n')
 
     def make_sound(self):
-        print("Meow")
+        pass
 
 
-class Dog(Animal):
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def info(self):
-        print(f"I am a dog. My name is {self.name}. I am {self.age} years old.")
+class PoliceCar(Car):
 
     def make_sound(self):
-        print("Bark")
+        print('Caution! The police is driving\n')
 
 
-cat1 = Cat("Kitty", 2.5)
-dog1 = Dog("Fluffy", 4)
+class AmbulanceCar(Car):
 
-for animal in (cat1, dog1):
-    animal.make_sound()
-    animal.info()
-    print(animal.head, animal.paws, animal.tail)
-    animal.make_sound()
+    def make_sound(self):
+        print('Caution! The ambulance is driving\n')
+
+
+if __name__ == '__main__':
+    car = Car()
+    car.drive()
+
+    police = PoliceCar()
+    police.drive()
+    police.make_sound()
+
+    ambulance = AmbulanceCar()
+    ambulance.drive()
+    ambulance.make_sound()
